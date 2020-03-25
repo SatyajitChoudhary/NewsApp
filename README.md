@@ -2,12 +2,12 @@
 
 * ###   To get started
 ```
-  git clone
-  npm install
-  npm start
-  Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  1. git clone
+  2. npm install
+  3. npm start
+  4. Open http://localhost:3000 to view it in the browser.
 ```
 
-# � �N�e�w�s�A�p�p�
-# �
-# �
+### � �N�e�w�s�A�p�p�
+### �
+### �
