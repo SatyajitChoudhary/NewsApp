@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, ListGroup, Card, ListGroupItem } from 'react-bootstrap';
-import { newsStore } from './store.js'
+import { newsOriginalStore } from './store.js'
 
 class App extends React.Component {
 
@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
       newsId : 0,
       searchText : "",
-      news : newsStore
+      newsStore : newsOriginalStore
     }
   }
 
@@ -29,16 +29,19 @@ class App extends React.Component {
     })
 
     var searchText = event.target.value
-    var news = this.state.news
+    var news = this.state.newsStore
     
     if(searchText && searchText !== "" && searchText !== " ")
     {
       searchText = event.target.value.toLowerCase()
       var filteredNews = news.filter(( response )=> ( response.headline.toLowerCase().includes( searchText ) || response.person.toLowerCase().includes( searchText ) || response.date.toLowerCase().includes( searchText ) || response.news.toLowerCase().includes( searchText )))
-      this.setState({ news : filteredNews })
+      
+      this.setState({ newsStore : filteredNews })
+      if(filteredNews && filteredNews.length>0 )
+       this.setState({ newsId : filteredNews[0].id-1 })
     } 
     else
-      this.setState({ news : newsStore , newsId : 0 })
+      this.setState({ newsStore : newsOriginalStore , newsId : 0 })
 
   }
   
@@ -57,12 +60,12 @@ class App extends React.Component {
               <Col style = {{ height:'671px', overflow:'auto' }}>
               {
               <ListGroup>
-                {this.state.news.map(( response, index) =>  <ListGroupItem key={ index } eventKey={ index } onClick={ this.selectNews.bind( this, response.id-1 )}>
+                {this.state.newsStore.map(( newsItem, index) =>  <ListGroupItem key={ index } active={ newsItem.id-1 === this.state.newsId } eventKey={ index } onClick={ this.selectNews.bind( this, newsItem.id-1 )}>
                 <Row>
-                  <Col sm={ 6 }>{ response.headline }</Col>
+                  <Col sm={ 6 }>{ newsItem.headline }</Col>
                   <Col sm={ 6 } className=" text-right ">
-                    <div>{ response.date }</div>
-                    <div>{ response.person }</div>
+                    <div>{ newsItem.date }</div>
+                    <div>{ newsItem.person }</div>
                   </Col>
                 </Row>
                 </ListGroupItem>)}
@@ -73,12 +76,12 @@ class App extends React.Component {
           </Col>
           <Col sm={ 8 }>
               <Card border=" primary " >
-                <Card.Header>{ newsStore[ this.state.newsId ].headline }</Card.Header>
+                <Card.Header>{ newsOriginalStore[ this.state.newsId ].headline }</Card.Header>
                 <Card.Body>
-                  <Card.Subtitle className=" mb-2 text-muted text-right ">{ newsStore[ this.state.newsId ].person }</Card.Subtitle>
-                  <Card.Subtitle className=" mb-2 text-muted text-right ">{ newsStore[ this.state.newsId ].date }</Card.Subtitle>
-                  <Card.Text>
-                    <div style={{ height:'570px', overflow:'auto' }}>{ newsStore[ this.state.newsId ].news}</div>
+                  <Card.Subtitle className=" mb-2 text-muted text-right ">{ newsOriginalStore[ this.state.newsId ].person }</Card.Subtitle>
+                  <Card.Subtitle className=" mb-2 text-muted text-right ">{ newsOriginalStore[ this.state.newsId ].date }</Card.Subtitle>
+                  <Card.Text style={{ height:'570px', overflow:'auto' }}>
+                    { newsOriginalStore[ this.state.newsId ].news}
                   </Card.Text> 
                 </Card.Body>
               </Card>
