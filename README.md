@@ -1,4 +1,4 @@
-# [News App](https://github.com/PurpleBooth) 
+# News App
 
 * ###   To get started
 ```
