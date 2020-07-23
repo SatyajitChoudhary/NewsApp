@@ -8,6 +8,3 @@
   4. Open http://localhost:3000 to view it in the browser.
 ```
 
-### � �N�e�w�s�A�p�p�
-### �
-### �
